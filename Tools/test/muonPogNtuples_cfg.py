@@ -7,19 +7,19 @@ import sys
 options = VarParsing.VarParsing()
 
 options.register('globalTag',
-                 '80X_mcRun2_asymptotic_2016_TrancheIV_v4', #default value
+                 '92X_dataRun2_Prompt_v5',#80X_mcRun2_asymptotic_2016_TrancheIV_v4', #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
                  "Global Tag")
 
 options.register('nEvents',
-                 -1, #default value
+                 500, #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.int,
                  "Maximum number of processed events")
 
 options.register('eosInputFolder',
-                 '/store/relval/CMSSW_8_0_20/RelValZMM_13/GEN-SIM-RECO/PU25ns_80X_mcRun2_asymptotic_2016_TrancheIV_v4_Tr4GT_v4-v1/00000', #default value
+                 '/store/data/Run2017G/SingleMuon/AOD/17Nov2017-v1/60001', #default test value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
                  "EOS folder with input files")
@@ -31,7 +31,7 @@ options.register('ntupleName',
                  "Folder and name ame for output ntuple")
 
 options.register('runOnMC',
-                 True, #default value
+                 False,#True, #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.bool,
                  "Run on DATA or MC")
@@ -90,8 +90,13 @@ process.source = cms.Source("PoolSource",
 
 )
 
-files = subprocess.check_output([ "/afs/cern.ch/project/eos/installation/0.3.15/bin/eos.select", "ls", options.eosInputFolder ])
-process.source.fileNames = [ options.eosInputFolder+"/"+f for f in files.split() ]  
+
+
+#files = subprocess.check_output([ "/afs/cern.ch/project/eos/installation/0.3.15/bin/eos.select", "ls", options.eosInputFolder ])
+#process.source.fileNames = [ options.eosInputFolder+"/"+f for f in files.split() ]  
+
+
+process.source.fileNames = ['/store/data/Run2017G/SingleMuon/AOD/17Nov2017-v1/60002/0639F498-BA2F-E811-A97B-02163E01213C.root']
 
 process.load("Configuration.StandardSequences.GeometryRecoDB_cff")
 process.load("Configuration.StandardSequences.MagneticField_38T_cff")

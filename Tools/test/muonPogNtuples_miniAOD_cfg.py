@@ -8,7 +8,7 @@ import sys
 options = VarParsing.VarParsing()
 
 options.register('globalTag',
-                 '80X_mcRun2_asymptotic_2016_v3', #default value
+                 '92X_dataRun2_Prompt_v5',#80X_mcRun2_asymptotic_2016_v3', #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
                  "Global Tag")
@@ -32,7 +32,7 @@ options.register('ntupleName',
                  "Folder and name ame for output ntuple")
 
 options.register('runOnMC',
-                 True, #default value
+                 False, #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.bool,
                  "Run on DATA or MC")
@@ -87,9 +87,9 @@ process.source = cms.Source("PoolSource",
 
 )
 
-files = subprocess.check_output([ "/afs/cern.ch/project/eos/installation/0.3.15/bin/eos.select", "ls", options.eosInputFolder ])
-process.source.fileNames = [ options.eosInputFolder+"/"+f for f in files.split() ]    
-
+#files = subprocess.check_output([ "/afs/cern.ch/project/eos/installation/0.3.15/bin/eos.select", "ls", options.eosInputFolder ])
+#process.source.fileNames = [ options.eosInputFolder+"/"+f for f in files.split() ]    
+process.source.fileNames = ['/store/data/Run2017G/SingleMuon/MINIAOD/17Nov2017-v1/90000/5CAC73DB-252F-E811-8262-0CC47AD99050.root']
 process.load("Configuration.StandardSequences.GeometryRecoDB_cff")
 process.load("Configuration.StandardSequences.MagneticField_38T_cff")
 #process.load("Geometry.CommonDetUnit.globalTrackingGeometry_cfi")
