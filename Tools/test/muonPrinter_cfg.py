@@ -6,7 +6,7 @@ process = cms.Process("PRINT")
 options = VarParsing.VarParsing()
 
 options.register('globalTag',
-                 '80X_dataRun2_v8', #default value
+                 '102X_upgrade2018_realistic_v20', #default value
 
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
@@ -31,13 +31,13 @@ options.register('muonMinPt',
                  "Minimal pT cut for muons")
 
 options.register('runOnMC',
-                 False, #default value
+                 True, #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.bool,
                  "Run on DATA or MC")
 
 options.register('plotTriggerInfo',
-                 False, #default value
+                 True, #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.bool,
                  "Plot Trigger information (for AOD)")
@@ -57,6 +57,7 @@ process.source = cms.Source("PoolSource",
         secondaryFileNames = cms.untracked.vstring()
 )
 
+process.source.fileNames = ['file:/tmp/bjoshi/D398ABC6-C3A2-D34B-BB8E-D2E4F1856C75.root']
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
 process.GlobalTag.globaltag = options.globalTag
 
@@ -66,7 +67,6 @@ process.load("Configuration.StandardSequences.GeometryDB_cff")
 process.muonEventDumper = cms.EDAnalyzer("MuonEventDumper",
                              TrigResultsTag = cms.untracked.InputTag("none"),
                              TrigSummaryTag = cms.untracked.InputTag("none"),
-
 
                              MuonTag          = cms.untracked.InputTag("muons"),
                              MuonMinPt        = cms.untracked.double(options.muonMinPt),
@@ -94,4 +94,4 @@ if options.runOnMC :
 
 process.AOutput = cms.EndPath(process.muonEventDumper)
 
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(1))

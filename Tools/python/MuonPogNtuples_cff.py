@@ -56,15 +56,29 @@ def customiseMuonCuts(process, minMuPt = 0., minNMu = 0) :
             
         process.MuonPogTree.MinMuPtCut = cms.untracked.double(minMuPt)
         process.MuonPogTree.MinNMuCut  = cms.untracked.int32(minNMu)
-
-        if hasattr(process,"prunedGenParticles") :
+        if hasattr(process,"genParticles") :
             print "[MuonPogNtuples]: applying pT cut to GEN particles as well"
-            
-            process.prunedGenParticles.select = cms.vstring("drop *"
-                                                            , "++keep pdgId =  13 && pt >" + str(minMuPt) 
-                                                            , "++keep pdgId = -13 && pt >" + str(minMuPt)
+            process.prunedGenParticles.select = cms.vstring("keep *",
+                                                            "++drop = 1",
+                                                            "++drop = -1",
+                                                            "++drop = 2",
+                                                            "++drop = -2",
+                                                            "++drop = 3",
+                                                            "++drop = -3",
+                                                            "++drop = 4",
+                                                            "++drop = -4",
+                                                            "++drop = 5",
+                                                            "++drop = -5",
+                                                            "++drop = 6",
+                                                            "++drop = -6",
+                                                            "++drop = 9",
+                                                            "++drop = 21",
                                                             )
-
+            '''            
+            process.prunedGenParticles.select = cms.vstring("drop *"
+                                                            , "++keep pdgId = 13"
+                                                            , "++keep pdgId = -13"
+                                                            )
+            '''
     else :
         print "[MuonPogNtuples]: muonPogTree not found, check your cfg!"
-

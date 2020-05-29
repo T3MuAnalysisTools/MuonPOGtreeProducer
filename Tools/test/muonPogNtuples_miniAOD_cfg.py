@@ -44,7 +44,7 @@ options.register('hltPathFilter',
                  "Filter on paths (now only accepts all or IsoMu20)")
 
 options.register('minMuPt',
-                 5., #default value
+                 0.0, #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.float,
                  "Skim the ntuple selecting only STA || TRK || GLB muons with pT > of this value")
@@ -87,8 +87,8 @@ process.source = cms.Source("PoolSource",
 
 )
 
-files = subprocess.check_output([ "/afs/cern.ch/project/eos/installation/0.3.15/bin/eos.select", "ls", options.eosInputFolder ])
-process.source.fileNames = [ options.eosInputFolder+"/"+f for f in files.split() ]    
+#files = subprocess.check_output([ "/afs/cern.ch/project/eos/installation/0.3.15/bin/eos.select", "ls", options.eosInputFolder ])
+#process.source.fileNames = [ options.eosInputFolder+"/"+f for f in files.split() ]    
 
 process.load("Configuration.StandardSequences.GeometryRecoDB_cff")
 process.load("Configuration.StandardSequences.MagneticField_38T_cff")
@@ -106,9 +106,12 @@ process.goodOfflinePrimaryVertices.src = cms.InputTag("offlineSlimmedPrimaryVert
 
 process.MuonPogTree.MuonTag = cms.untracked.InputTag("slimmedMuons")
 process.MuonPogTree.PrimaryVertexTag = cms.untracked.InputTag("offlineSlimmedPrimaryVertices")
+process.MuonPogTree.GenTag = cms.untracked.InputTag("prunedGenParticles")
 process.MuonPogTree.TrigResultsTag = cms.untracked.InputTag("none")
 process.MuonPogTree.TrigSummaryTag = cms.untracked.InputTag("none")
 process.MuonPogTree.PFMetTag = cms.untracked.InputTag("none")
 process.MuonPogTree.PFChMetTag = cms.untracked.InputTag("none")
 process.MuonPogTree.CaloMetTag = cms.untracked.InputTag("none")
 
+#process.source.fileNames = ['/store/mc/RunIIAutumn18MiniAOD/BuToJpsiK_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/MINIAODSIM/102X_upgrade2018_realistic_v15-v2/90000/10311389-8843-0C4E-BB57-CD2003467E55.root']
+process.source.fileNames = ['file:/tmp/bjoshi/10311389-8843-0C4E-BB57-CD2003467E55.root']

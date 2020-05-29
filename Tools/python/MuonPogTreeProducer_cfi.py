@@ -8,22 +8,20 @@ MuonPogTree = cms.EDAnalyzer("MuonPogTreeProducer",
                              TrigPathCut   = cms.untracked.string("all"),
 
                              MuonTag          = cms.untracked.InputTag("muons"),
-                             PrimaryVertexTag = cms.untracked.InputTag("goodOfflinePrimaryVertices"),
+                             simMuonTag       = cms.untracked.InputTag("muonSimClassifier"),
+                             
+                             PrimaryVertexTag = cms.untracked.InputTag("offlinePrimaryVertices"),
                              BeamSpotTag      = cms.untracked.InputTag("offlineBeamSpot"),
                              
                              PFMetTag         = cms.untracked.InputTag("pfMet"), 
                              PFChMetTag       = cms.untracked.InputTag("pfChMet"), 
                              CaloMetTag       = cms.untracked.InputTag("caloMet"),
-
                              ScalersTag = cms.untracked.InputTag("scalersRawToDigi"),
                              l1MuonsTag = cms.untracked.InputTag("gmtStage2Digis:Muon:"),
 
-                             GenTag = cms.untracked.InputTag("prunedGenParticles"), # pruned
+                             GenTag = cms.untracked.InputTag("genParticles"), # pruned
                              PileUpInfoTag = cms.untracked.InputTag("addPileupInfo"),
                              GenInfoTag = cms.untracked.InputTag("generator"),
                              MinMuPtCut = cms.untracked.double(0.),
                              MinNMuCut  = cms.untracked.int32(0)
                              )
-
-
-

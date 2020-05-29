@@ -9,362 +9,380 @@
 namespace muon_pog {
 
 
-  class GenInfo {
-  public:
-    Float_t trueNumberOfInteractions;   // Number of simultaneous interactions generated (before poissonian ev by ev smearing)
-    Int_t   actualNumberOfInteractions; // Number of simultaneous interactions generated (after poissonian ev by ev smearing)
-    Float_t genWeight;
-    GenInfo(){};
-    virtual ~GenInfo(){};
-    
-    ClassDef(GenInfo,1)
-  };
-  
-  class GenParticle {
-  public:
-    
-    GenParticle(){};
-    virtual ~GenParticle(){};
-    
-    Int_t pdgId;  // PDG identifier
-    Int_t status; // MC status
-    Float_t energy; // energy [GeV]
-    Float_t pt; // pt [GeV]
-    Float_t eta; // eta
-    Float_t phi; // phi
-    Float_t vx; // x coordinate of production vertex [cm]
-    Float_t vy; // y coordinate of production vertex [cm]
-    Float_t vz; // z coordinate of production vertex [cm]
-    std::vector<Int_t> mothers; // vector of indices of mothers
-    std::vector<bool>  flags;   // vector of flags, in the same order of
-                                //  of "DataFormats/HepMCCandidate/interface/GenStatusFlag.h"
+   class GenInfo {
+      public:
+         Float_t trueNumberOfInteractions;   // Number of simultaneous interactions generated (before poissonian ev by ev smearing)
+         Int_t   actualNumberOfInteractions; // Number of simultaneous interactions generated (after poissonian ev by ev smearing)
+         Float_t genWeight;
+         GenInfo(){};
+         virtual ~GenInfo(){};
 
-  private:
-    
-    ClassDef(GenParticle,1)
-  };
+         ClassDef(GenInfo,1)
+   };
 
-  class METs {
-  public:
-    Float_t pfMet;   // raw PF MET [GeV]
-    Float_t pfChMet; // raw PF charged MET [GeV]
-    Float_t caloMet; // raw Calo MET [GeV]
+   class GenParticle {
+      public:
 
-    METs(){};
-    virtual ~METs(){};
-    
-    ClassDef(METs,1)
-  };
+         GenParticle(){};
+         virtual ~GenParticle(){};
 
-  enum MuonDetType { DT=0, CSC, RPC };
+         Int_t pdgId;  // PDG identifier
+         Int_t status; // MC status
+         Float_t energy; // energy [GeV]
+         Float_t pt; // pt [GeV]
+         Float_t eta; // eta
+         Float_t phi; // phi
+         Float_t vx; // x coordinate of production vertex [cm]
+         Float_t vy; // y coordinate of production vertex [cm]
+         Float_t vz; // z coordinate of production vertex [cm]
+         std::vector<Int_t> mothers; // vector of indices of mothers
+         std::vector<bool>  flags;   // vector of flags, in the same order of
+         //  of "DataFormats/HepMCCandidate/interface/GenStatusFlag.h"
 
-  class ChambMatch {
-  public:
-    Int_t r;   // station/disk
-    Int_t phi; // sector
-    Int_t eta; // ring/wheel
-    
-    MuonDetType type;
-    
-    Float_t x; 
-    Float_t y;
+      private:
 
-    Float_t dXdZ; 
-    Float_t dYdZ;
+         ClassDef(GenParticle,1)
+   };
 
-    Float_t dx;  // 999999 if not matched with a segment (I think) 
-    Float_t dy;  // 999999 if not matched with a segment (I think)
+   class METs {
+      public:
+         Float_t pfMet;   // raw PF MET [GeV]
+         Float_t pfChMet; // raw PF charged MET [GeV]
+         Float_t caloMet; // raw Calo MET [GeV]
 
-    Float_t dDxDz;  // 999999 if not matched with a segment (I think) 
-    Float_t dDyDz;  // 999999 if not matched with a segment (I think)
-    
-    Float_t errxTk; 
-    Float_t erryTk; 
+         METs(){};
+         virtual ~METs(){};
 
-    Float_t errDxDzTk; 
-    Float_t errDyDzTk; 
-    
-    Float_t errxSeg;  // 999999 if not matched with a segment (I think)
-    Float_t errySeg;  // 999999 if not matched with a segment (I think) 
+         ClassDef(METs,1)
+   };
 
-    Float_t errDxDzSeg;  // 999999 if not matched with a segment (I think)
-    Float_t errDyDzSeg;  // 999999 if not matched with a segment (I think) 
-    
-    ChambMatch(){};
-    virtual ~ChambMatch(){};
-    
-    ClassDef(ChambMatch,2)
-  };
+   enum MuonDetType { DT=0, CSC, RPC };
 
-  class HitInfo {
-  public:
-    Int_t r; // station/disk
-    Int_t phi; // sector
-    Int_t eta;   // ring/wheel
-    
-    MuonDetType type;
+   class ChambMatch {
+      public:
+         Int_t r;   // station/disk
+         Int_t phi; // sector
+         Int_t eta; // ring/wheel
 
-    Int_t nHits; 
-    Int_t nHitsPhi; 
-    Int_t nHitsTheta; 
+         MuonDetType type;
 
-    HitInfo(){};
-    virtual ~HitInfo(){};
-    
-    ClassDef(HitInfo,1)
-  };
+         Float_t x; 
+         Float_t y;
 
-  enum MuonFitType { DEFAULT=0, INNER, STA, GLB, TUNEP, PICKY, DYT, TPFMS};
+         Float_t dXdZ; 
+         Float_t dYdZ;
 
-  class MuonFit {
-  public:
-    Float_t pt;  // pt [GeV]   
-    Float_t eta; // eta
-    Float_t phi; // phi
+         Float_t dx;  // 999999 if not matched with a segment (I think) 
+         Float_t dy;  // 999999 if not matched with a segment (I think)
 
-    Int_t   charge;    // charge
+         Float_t dDxDz;  // 999999 if not matched with a segment (I think) 
+         Float_t dDyDz;  // 999999 if not matched with a segment (I think)
 
-    Float_t ptErr; // fit sigma pT 
+         Float_t errxTk; 
+         Float_t erryTk; 
 
-    MuonFit(){};
-    MuonFit(Float_t in_pt,
-	    Float_t in_eta,
-	    Float_t in_phi,
-	    Int_t   in_charge,
-	    Float_t in_ptErr
-	    ) : pt(in_pt) ,
-                eta(in_eta) ,
-                phi(in_phi) ,
-                charge(in_charge) ,
-                ptErr(in_ptErr) {};
-    virtual ~MuonFit(){};
-    
-    ClassDef(MuonFit,1)
-  };
+         Float_t errDxDzTk; 
+         Float_t errDyDzTk; 
 
-  class Muon {
-  public:
+         Float_t errxSeg;  // 999999 if not matched with a segment (I think)
+         Float_t errySeg;  // 999999 if not matched with a segment (I think) 
 
-    Float_t pt;  // pt [GeV]   
-    Float_t eta; // eta
-    Float_t phi; // phi
+         Float_t errDxDzSeg;  // 999999 if not matched with a segment (I think)
+         Float_t errDyDzSeg;  // 999999 if not matched with a segment (I think) 
 
-    Int_t   charge;    // charge
+         ChambMatch(){};
+         virtual ~ChambMatch(){};
 
-    Int_t   isGlobal;
-    Int_t   isTracker;
-    Int_t   isTrackerArb;
-    Int_t   isRPC;
-    Int_t   isStandAlone;
-    Int_t   isPF;
+         ClassDef(ChambMatch,2)
+   };
 
-    Int_t   isSoft;
-    Int_t   isLoose;
-    Int_t   isTight;
-    Int_t   isMedium;
-    Int_t   isHighPt;
-    
-    //Detector Based Isolation
-    Float_t trackerIso;
-    Float_t EMCalIso;
-    Float_t HCalIso;
+   class HitInfo {
+      public:
+         Int_t r; // station/disk
+         Int_t phi; // sector
+         Int_t eta;   // ring/wheel
 
-    // PF Isolation
-    Float_t chargedHadronIso;
-    Float_t chargedHadronIsoPU;
-    Float_t photonIso;
-    Float_t neutralHadronIso;
+         MuonDetType type;
+
+         Int_t nHits; 
+         Int_t nHitsPhi; 
+         Int_t nHitsTheta; 
+
+         HitInfo(){};
+         virtual ~HitInfo(){};
+
+         ClassDef(HitInfo,1)
+   };
+
+   enum MuonFitType { DEFAULT=0, INNER, STA, GLB, TUNEP, PICKY, DYT, TPFMS};
+
+   class MuonFit {
+      public:
+         Float_t pt;  // pt [GeV]   
+         Float_t eta; // eta
+         Float_t phi; // phi
+
+         Int_t   charge;    // charge
+
+         Float_t ptErr; // fit sigma pT 
+
+         MuonFit(){};
+         MuonFit(Float_t in_pt,
+               Float_t in_eta,
+               Float_t in_phi,
+               Int_t   in_charge,
+               Float_t in_ptErr
+               ) : pt(in_pt) ,
+         eta(in_eta) ,
+         phi(in_phi) ,
+         charge(in_charge) ,
+         ptErr(in_ptErr) {};
+         virtual ~MuonFit(){};
+
+         ClassDef(MuonFit,1)
+   };
+
+   class simMuon {
+      public:
+         Float_t pt;
+         Float_t eta;
+         Float_t phi;
+         Float_t simPdgId;
+         Float_t simMotherPdgId;
+         Float_t simFlavour;
+         Float_t simType;
+         Float_t simBX;
+
+         Int_t index;
+
+         virtual ~simMuon(){};
+         ClassDef(simMuon, 1)
+
+   };
+
+   class Muon {
+      public:
+
+         Float_t pt;  // pt [GeV]   
+         Float_t eta; // eta
+         Float_t phi; // phi
+
+         Int_t index;
+
+         Int_t   charge;    // charge
+
+         Int_t   isGlobal;
+         Int_t   isTracker;
+         Int_t   isTrackerArb;
+         Int_t   isRPC;
+         Int_t   isStandAlone;
+         Int_t   isPF;
+
+         Int_t   isSoft;
+         Int_t   isLoose;
+         Int_t   isTight;
+         Int_t   isMedium;
+         Int_t   isHighPt;
+
+         //Detector Based Isolation
+         Float_t trackerIso;
+         Float_t EMCalIso;
+         Float_t HCalIso;
+
+         // PF Isolation
+         Float_t chargedHadronIso;
+         Float_t chargedHadronIsoPU;
+         Float_t photonIso;
+         Float_t neutralHadronIso;
 
 
-    Float_t isoPflow04; // PF isolation in dR<0.4 cone dBeta
-    Float_t isoPflow03; // PF isolation in dR<0.3 cone dBeta
+         Float_t isoPflow04; // PF isolation in dR<0.4 cone dBeta
+         Float_t isoPflow03; // PF isolation in dR<0.3 cone dBeta
 
-    Float_t dxy;       // signed transverse distance to primary vertex [cm]
-    Float_t dz;        // signed longitudinal distance to primary vertex at min. transv. distance [cm]
-    Float_t edxy;      // uncertainty on dxy [cm]
-    Float_t edz;       // uncertainty on dz [cm]
-    Float_t dxybs;     // signed transverse distance to beamspot [cm]
-    Float_t dzbs;      // signed longitudinal distance to beamspot [cm]
+         Float_t dxy;       // signed transverse distance to primary vertex [cm]
+         Float_t dz;        // signed longitudinal distance to primary vertex at min. transv. distance [cm]
+         Float_t edxy;      // uncertainty on dxy [cm]
+         Float_t edz;       // uncertainty on dz [cm]
+         Float_t dxybs;     // signed transverse distance to beamspot [cm]
+         Float_t dzbs;      // signed longitudinal distance to beamspot [cm]
 
-    Int_t   nHitsGlobal;
-    Int_t   nHitsTracker;
-    Int_t   nHitsStandAlone; 
+         Int_t   nHitsGlobal;
+         Int_t   nHitsTracker;
+         Int_t   nHitsStandAlone; 
 
-    // Variables for ID 
-    //  - General (Tight, HighPt, Soft) 
-    Float_t glbNormChi2; 
-    Float_t trkNormChi2; 
-    Int_t   trkMuonMatchedStations; 
-    Int_t   glbMuonValidHits; 
-    Int_t   trkPixelValidHits; 
-    Int_t   trkPixelLayersWithMeas; 
-    Int_t   trkTrackerLayersWithMeas; 
+         // Variables for ID 
+         //  - General (Tight, HighPt, Soft) 
+         Float_t glbNormChi2; 
+         Float_t trkNormChi2; 
+         Int_t   trkMuonMatchedStations; 
+         Int_t   glbMuonValidHits; 
+         Int_t   trkPixelValidHits; 
+         Int_t   trkPixelLayersWithMeas; 
+         Int_t   trkTrackerLayersWithMeas; 
 
-    //  - HighPt 
-    Float_t bestMuPtErr; 
+         //  - HighPt 
+         Float_t bestMuPtErr; 
 
-    //  - Medium 
-    Float_t trkValidHitFrac; 
-    Float_t trkStaChi2; 
-    Float_t trkKink; 
-    Float_t muSegmComp; 
+         //  - Medium 
+         Float_t trkValidHitFrac; 
+         Float_t trkStaChi2; 
+         Float_t trkKink; 
+         Float_t muSegmComp; 
 
-    //  - Soft 
-    Int_t   isTrkMuOST; 
-    Int_t   isTrkHP; 
+         //  - Soft 
+         Int_t   isTrkMuOST; 
+         Int_t   isTrkHP; 
 
-    Float_t dxyBest; 
-    Float_t dzBest; 
-    Float_t dxyInner; 
-    Float_t dzInner; 
+         Float_t dxyBest; 
+         Float_t dzBest; 
+         Float_t dxyInner; 
+         Float_t dzInner; 
 
-    // Muon time 
-    Float_t muonTimeDof; 
-    Float_t muonTime; 
-    Float_t muonTimeErr;
+         // Muon time 
+         Float_t muonTimeDof; 
+         Float_t muonTime; 
+         Float_t muonTimeErr;
 
-    // Muon time 
-    Float_t muonRpcTimeDof; 
-    Float_t muonRpcTime; 
-    Float_t muonRpcTimeErr;
+         // Muon time 
+         Float_t muonRpcTimeDof; 
+         Float_t muonRpcTime; 
+         Float_t muonRpcTimeErr;
 
-    std::vector<HitInfo> hits;
-    std::vector<ChambMatch> matches;
-    std::vector<MuonFit> fits;
+         std::vector<HitInfo> hits;
+         std::vector<ChambMatch> matches;
+         std::vector<MuonFit> fits;
 
-    Muon(){};
-    virtual ~Muon(){};
+         Muon(){};
+         virtual ~Muon(){};
 
-    inline Float_t fitPt( const muon_pog::MuonFitType type ) 
-    {
-      return fits.at(type).pt;
-    };
+         inline Float_t fitPt( const muon_pog::MuonFitType type ) 
+         {
+            return fits.at(type).pt;
+         };
 
-    inline Float_t fitEta( const muon_pog::MuonFitType type ) 
-    {
-      return fits.at(type).eta;
-    };
+         inline Float_t fitEta( const muon_pog::MuonFitType type ) 
+         {
+            return fits.at(type).eta;
+         };
 
-    inline Float_t fitPhi( const muon_pog::MuonFitType type ) 
-    {
-      return fits.at(type).phi;
-    };
+         inline Float_t fitPhi( const muon_pog::MuonFitType type ) 
+         {
+            return fits.at(type).phi;
+         };
 
-    inline Int_t fitCharge( const muon_pog::MuonFitType type ) 
-    {
-      return fits.at(type).charge;
-    };
+         inline Int_t fitCharge( const muon_pog::MuonFitType type ) 
+         {
+            return fits.at(type).charge;
+         };
 
-    inline Float_t fitPtErr( const muon_pog::MuonFitType type ) 
-    {
-      return fits.at(type).ptErr;
-    };
+         inline Float_t fitPtErr( const muon_pog::MuonFitType type ) 
+         {
+            return fits.at(type).ptErr;
+         };
 
-    ClassDef(Muon,4)
-  };
+         ClassDef(Muon,4)
+   };
 
-  class HLTObject {
-  public:
+   class HLTObject {
+      public:
 
-    std::string filterTag; // name of filter passed by the object
-    Float_t pt;            // pt of the object passing the filter [GeV]
-    Float_t eta;           // eta of the object passing the filter
-    Float_t phi;           // phi of the object passing the filter
-    
-    HLTObject(){};
-    virtual ~HLTObject(){};
+         std::string filterTag; // name of filter passed by the object
+         Float_t pt;            // pt of the object passing the filter [GeV]
+         Float_t eta;           // eta of the object passing the filter
+         Float_t phi;           // phi of the object passing the filter
 
-    ClassDef(HLTObject,1)
+         HLTObject(){};
+         virtual ~HLTObject(){};
 
-  };
-    
-  class L1Muon {
-  public:
-        
-    Float_t pt;  // pt [GeV]
-    Float_t eta; // eta
-    Float_t phi; // phi
-    Int_t charge; //charge (0 if invalid)
-      
-    Int_t quality;
-    Int_t bx;
-      
-    Int_t tfIndex;
-    
-    L1Muon(){};
-    virtual ~L1Muon(){};
-      
-    ClassDef(L1Muon,1)
-      
-  };
+         ClassDef(HLTObject,1)
 
-  class HLT {
-  public:
-    std::vector<std::string> triggers; // vector of strings with HLT paths
-    std::vector<muon_pog::HLTObject>   objects;  // vector of hlt objects assing filters
+   };
 
-    HLT(){};
-    virtual ~HLT(){};
-    bool match( const std::string & path ) {
-      if (  std::find (  triggers.begin(), triggers.end(), path ) != triggers.end() )
-	return true;
-      
-      return false;
-    }
+   class L1Muon {
+      public:
 
-    bool find( const std::string & path ) {
-      for ( std::vector<std::string>::const_iterator it = triggers.begin(); it != triggers.end(); ++it ) {
-	if ( it->find ( path ) != std::string::npos ) return true;
-      }
-      return false;
-    }
+         Float_t pt;  // pt [GeV]
+         Float_t eta; // eta
+         Float_t phi; // phi
+         Int_t charge; //charge (0 if invalid)
 
-    ClassDef(HLT,1)
+         Int_t quality;
+         Int_t bx;
 
-  };
+         Int_t tfIndex;
 
-  class EventId {
-  public:
+         L1Muon(){};
+         virtual ~L1Muon(){};
 
-    Int_t runNumber;              // run number
-    Int_t luminosityBlockNumber;  // luminosity block number
-    Int_t eventNumber;            // event number
-    Int_t nMuons;                 // number of good muons in the event
-    std::vector<Float_t> maxPTs;  // max PT for each good muon in the event
+         ClassDef(L1Muon,1)
 
-    EventId(){};
-    virtual ~EventId(){};
+   };
 
-    ClassDef(EventId,2)
-  };
+   class HLT {
+      public:
+         std::vector<std::string> triggers; // vector of strings with HLT paths
+         std::vector<muon_pog::HLTObject>   objects;  // vector of hlt objects assing filters
 
-  class Event {
-  public:
+         HLT(){};
+         virtual ~HLT(){};
+         bool match( const std::string & path ) {
+            if (  std::find (  triggers.begin(), triggers.end(), path ) != triggers.end() )
+               return true;
 
-    Int_t runNumber;             // run number
-    Int_t luminosityBlockNumber; // luminosity block number
-    Int_t eventNumber;           // event number
+            return false;
+         }
 
-    Int_t bxId;                  // bunch crossing number
-    unsigned long long orbit;    // orbit number
-    Float_t instLumi;            // inst lumi from scalers [10E30]
+         bool find( const std::string & path ) {
+            for ( std::vector<std::string>::const_iterator it = triggers.begin(); it != triggers.end(); ++it ) {
+               if ( it->find ( path ) != std::string::npos ) return true;
+            }
+            return false;
+         }
 
-    Int_t nVtx;                      // number of valid reconstructed primary vertices 
-    Float_t primaryVertex[3];        // 3d coordinates of PV [cm]
-    Float_t cov_primaryVertex[3][3]; // 3x3 covariance matrix of PV estimation [cm*cm]
+         ClassDef(HLT,1)
 
-    std::vector <muon_pog::GenInfo> genInfos;        // venctor of genInfos; size=0 in data
-    std::vector<muon_pog::GenParticle> genParticles; // venctor of genParticles size=0 in data
-    std::vector<muon_pog::Muon> muons; // vector of muons
-    muon_pog::METs mets;  // vector of different MET definitions 
-    muon_pog::HLT hlt;                 // HLT objects
-    std::vector <muon_pog::L1Muon> l1muons; //vector with the L1 muon candidates
-      
-    Event(){};
-    virtual ~Event(){};
+   };
 
-    ClassDef(Event,6)
-  };
+   class EventId {
+      public:
+
+         Int_t nMuons;                 // number of good muons in the event
+         std::vector<Float_t> maxPTs;  // max PT for each good muon in the event
+
+         EventId(){};
+         virtual ~EventId(){};
+
+         ClassDef(EventId,2)
+   };
+
+   class Event {
+      public:
+
+         Int_t runNumber;             // run number
+         Int_t luminosityBlockNumber; // luminosity block number
+         Int_t eventNumber;           // event number
+
+         Int_t bxId;                  // bunch crossing number
+         unsigned long long orbit;    // orbit number
+         Float_t instLumi;            // inst lumi from scalers [10E30]
+
+         Int_t nVtx;                      // number of valid reconstructed primary vertices 
+         Float_t primaryVertex[3];        // 3d coordinates of PV [cm]
+         Float_t cov_primaryVertex[3][3]; // 3x3 covariance matrix of PV estimation [cm*cm]
+
+         std::vector <muon_pog::GenInfo> genInfos;        // venctor of genInfos; size=0 in data
+         std::vector<muon_pog::GenParticle> genParticles; // venctor of genParticles size=0 in data
+         std::vector<muon_pog::Muon> muons; // vector of muons
+         std::vector<muon_pog::simMuon> sim_muons; // vector of sim muons
+         muon_pog::METs mets;  // vector of different MET definitions 
+         muon_pog::HLT hlt;                 // HLT objects
+         std::vector <muon_pog::L1Muon> l1muons; //vector with the L1 muon candidates
+
+         Event(){};
+         virtual ~Event(){};
+
+         ClassDef(Event,6)
+   };
 
 }
 #endif
