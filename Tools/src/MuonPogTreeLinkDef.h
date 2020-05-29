@@ -15,6 +15,7 @@
 #pragma link C++ class muon_pog::ChambMatch+;
 #pragma link C++ class muon_pog::HitInfo+;
 #pragma link C++ class muon_pog::MuonFit+;
+#pragma link C++ class muon_pog::simMuon+;
 #pragma link C++ class std::vector<muon_pog::GenInfo>+;
 #pragma link C++ class std::vector<muon_pog::GenParticle>+;
 #pragma link C++ class std::vector<muon_pog::Muon>+;
@@ -22,5 +23,6 @@
 #pragma link C++ class std::vector<muon_pog::ChambMatch>+;
 #pragma link C++ class std::vector<muon_pog::HitInfo>+;
 #pragma link C++ class std::vector<muon_pog::MuonFit>+;
+#pragma link C++ class std::vector<muon_pog::simMuon>+;
 #pragma link C++ class muon_pog::EventId+;
 #endif
