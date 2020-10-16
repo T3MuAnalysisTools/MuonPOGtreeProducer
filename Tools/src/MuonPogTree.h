@@ -184,6 +184,9 @@ namespace muon_pog {
          Int_t   isMedium;
          Int_t   isHighPt;
 
+         Bool_t matchedKs; // true if the muon is matched to a Kshort daughter track
+         Bool_t matchedPhi; // true if the muons is matched to a Phi daughter track
+
          //Detector Based Isolation
          Float_t trackerIso;
          Float_t EMCalIso;
@@ -219,6 +222,37 @@ namespace muon_pog {
          Int_t   trkPixelValidHits; 
          Int_t   trkPixelLayersWithMeas; 
          Int_t   trkTrackerLayersWithMeas; 
+
+         // TrackerMuonId quantities
+         Float_t muCaloComp;
+         Float_t innerNormChi2;
+         Int_t innerNValidHits;
+         Int_t innerNLostTrackerHits;
+         Int_t innerNInnerLostTrackerHits;
+         Int_t innerNOuterLostTrackerHits;
+         Float_t innerPtErrPt;
+         Int_t innerNMatches;
+         Int_t innerNMatchedStations;
+         Int_t innerExpectedMatchedStations;
+
+         // TrackerMuonId (calo quantities)
+         Float_t em;
+         Float_t emS9;
+         Float_t emS25;
+         Float_t had;
+         Float_t hadS9;
+
+         // Global muon Id quantities
+         Float_t updatedSta;
+         Float_t glbKink;
+         Float_t trkRelChi2;
+         Float_t staRelChi2;
+         Float_t chi2LocalMomentum;
+         Float_t localDistance;
+         Float_t globalDeltaEtaPhi;
+         Float_t tightMatch;
+         Float_t glbTrackProbability;
+         Float_t vhitcomb;
 
          //  - HighPt 
          Float_t bestMuPtErr; 
@@ -282,6 +316,41 @@ namespace muon_pog {
 
          ClassDef(Muon,4)
    };
+
+   class CompositeVertex {
+
+      public:
+
+         Int_t reco_pdgId;
+
+         Float_t mass;
+
+         Float_t bssv_dxy;
+         Float_t bssv_dxyErr;
+         Float_t bssv_dxySig;
+
+         // vertex related quantities
+         Float_t pvsv_dxy;
+         Float_t pvsv_dxyError;
+         Float_t pvsv_dxySig;
+         Float_t pvsv_3d;
+         Float_t pvsv_3dError;
+         Float_t pvsv_3dSig;
+         Float_t pvsv_normChi2;
+         Float_t pvsv_totalChi2;
+         Float_t pvsv_cosTheta;
+
+         // index of the muon in the muon_pog::Muon vector 
+         // if matched to a daughter track, else -1
+         Int_t muon1_index; 
+         Int_t muon2_index;
+
+         CompositeVertex(){};
+         virtual ~CompositeVertex(){};
+
+         ClassDef(CompositeVertex, 1)
+   };
+
 
    class HLTObject {
       public:
@@ -377,6 +446,8 @@ namespace muon_pog {
          muon_pog::METs mets;  // vector of different MET definitions 
          muon_pog::HLT hlt;                 // HLT objects
          std::vector <muon_pog::L1Muon> l1muons; //vector with the L1 muon candidates
+         std::vector <muon_pog::CompositeVertex> phis; // vector containing phi->KK candidates
+         std::vector <muon_pog::CompositeVertex> kshorts; // vector containing kshort->pipi candidates 
 
          Event(){};
          virtual ~Event(){};

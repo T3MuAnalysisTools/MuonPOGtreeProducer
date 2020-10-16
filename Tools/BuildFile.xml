@@ -5,8 +5,15 @@
 <use name="DataFormats/RecoCandidate"/>
 <use name="CommonTools/Utils"/>
 <use name="CommonTools/UtilAlgos"/>
+<use name="DataFormats/TrackReco"/>
+<use name="DataFormats/VertexReco"/>
+<use name="TrackingTools/TransientTrack"/>
+<use name="RecoVertex/KinematicFit"/>
+<use name="DataFormats/Common"/>
 
 <use name="rootminuit"/>
+<use name="rootrflx"/>
+<use name="boost"/>
 
 <export>
    <lib name="1"/>

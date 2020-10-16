@@ -4,15 +4,15 @@ config = Configuration()
 config.section_('General')
 config.General.transferOutputs = True
 config.General.transferLogs = True
-config.General.workArea = 'Production_28_05_2020' 
+config.General.workArea = 'Production_10_06_2020' 
 config.General.requestName = ''
 
 config.section_('JobType')
 config.JobType.pluginName  = 'Analysis'
-config.JobType.psetName    = '../muonPogNtuples_cfg.py'
+config.JobType.psetName    = '../muonPogNtuples_miniAOD_cfg.py'
 #config.JobType.outputFiles = ['muonNTuple.root']
 config.JobType.pyCfgParams = ['globalTag=102X_upgrade2018_realistic_v20',
-                              'ntupleName=muonPOGNtuple_SingleMuonRun2016B_PromptReco.root',
+                              'ntupleName=muonPOGNtuple.root',
                               'nEvents=-1',
                               'runOnMC=True',
                               'hltPathFilter=all',
@@ -27,13 +27,13 @@ config.Data.inputDataset = '/DsEtaMuNu_EtaMuMuGamma/wangjian-CRAB3_RunIIAutumn18
 config.Data.outputDatasetTag = 'Production2018_19_05_2020_DsEtaMuNu_EtaMuMuGamma__wangjian-CRAB3_RunIIAutumn18DR_AODSIM-c5ffe086db9ac96902dde93cd44a5aa0'
 
 
-#config.Data.lumiMask = 'Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
+config.Data.lumiMask = 'Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
 #config.Data.runRange = '273299'
 
 config.Data.splitting    = 'FileBased'
 config.Data.inputDBS  = 'global'
 config.Data.totalUnits = -1
-config.Data.unitsPerJob  = 10  # Since files based, 10 files per job
+config.Data.unitsPerJob  = 5  # Since files based, 5 files per job
 config.Data.publication = True
 config.Data.outLFNDirBase  = '/store/user/bjoshi'
 

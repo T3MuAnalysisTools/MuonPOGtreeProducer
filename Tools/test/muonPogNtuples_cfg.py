@@ -8,25 +8,25 @@ import sys
 options = VarParsing.VarParsing()
 
 options.register('globalTag',
-                 '102X_upgrade2018_realistic_v20', #default value
+                 '102X_dataRun2_Prompt_v16', #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
                  "Global Tag")
 
 options.register('nEvents',
-                 100, #default value
+                 -1, #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.int,
                  "Maximum number of processed events")
 
 options.register('ntupleName',
-                 './muonPOGNtuple_8_0_3_RelValZMM_13.root', #default value
+                 './muonPOGNtuple_singleMuon.root', #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
                  "Folder and name ame for output ntuple")
 
 options.register('runOnMC',
-                 True, #default value
+                 False, #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.bool,
                  "Run on DATA or MC")
@@ -44,7 +44,7 @@ options.register('minMuPt',
                  "Skim the ntuple saving only STA || TRK || GLB muons with pT > of this value")
 
 options.register('minNMu',
-                 1, #default value
+                 0, #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.int,
                  "number of TRK or GLB muons with pT > minMuPt to pass the skim")
@@ -69,9 +69,10 @@ process = cms.Process("NTUPLES")
 
 process.load('Configuration.StandardSequences.Services_cff')
 process.load('FWCore.MessageService.MessageLogger_cfi')
+process.load("TrackingTools/TransientTrack/TransientTrackBuilder_cfi")
 
 process.options   = cms.untracked.PSet( wantSummary = cms.untracked.bool(True) )
-process.MessageLogger.cerr.FwkReport.reportEvery = 10
+process.MessageLogger.cerr.FwkReport.reportEvery = 100
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(options.nEvents))
 
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_condDBv2_cff')
@@ -89,12 +90,20 @@ process.source = cms.Source("PoolSource",
 
 #files = subprocess.check_output([ "/afs/cern.ch/project/eos/installation/0.3.15/bin/eos.select", "ls", options.eosInputFolder ])
 #process.source.fileNames = [ options.eosInputFolder+"/"+f for f in files.split() ]  
-process.source.fileNames = ['file:/tmp/bjoshi/D398ABC6-C3A2-D34B-BB8E-D2E4F1856C75.root']
+#process.source.fileNames = ['/store/mc/RunIIAutumn18DRPremix/BdToPiPi_BMuonFilter_SoftQCDnonD_TuneCP5_13TeV-pythia8-evtgen/AODSIM/102X_upgrade2018_realistic_v15-v2/1120000/2EB6F3EE-5988-8D42-9723-E6C882DEDD00.root']
 
-
+process.source.fileNames = ['/store/data/Run2018D/SingleMuon/AOD/22Jan2019-v2/1110000/9EF1066D-C552-474C-AE57-AA53A6DD6218.root'] # single muon
 from MuonPOGtreeProducer.Tools.MuonPogNtuples_cff import appendMuonPogNtuple, customiseHlt, customiseMuonCuts
     
 appendMuonPogNtuple(process,options.runOnMC,"HLT",options.ntupleName)
 
 customiseHlt(process,pathCut,filterCut)
 customiseMuonCuts(process,options.minMuPt,options.minNMu)
+
+process.MuonPogTree.miniAODRun = cms.untracked.bool(False)
+process.MuonPogTree.doKsVertices = cms.untracked.bool(True)
+process.MuonPogTree.doPhiVertices = cms.untracked.bool(True)
+process.MuonPogTree.TriggerObjectTag = cms.untracked.InputTag("none")
+process.MuonPogTree.TrackTag = cms.untracked.InputTag("generalTracks")
+process.MuonPogTree.secondaryVertexTag = cms.untracked.InputTag("inclusiveCandidateSecondaryVertices")
+process.MuonPogTree.secondaryKsVertexTag = cms.untracked.InputTag("generalV0Candidates:Kshort:RECO")

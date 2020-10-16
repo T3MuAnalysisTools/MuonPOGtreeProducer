@@ -14,7 +14,7 @@ def appendMuonPogNtuple(process, runOnMC, processTag="HLT", ntupleFileName="Muon
     if runOnMC :
         process.load("MuonPOGtreeProducer.Tools.PrunedGenParticles_cfi")
         process.muonPogNtuple = cms.Sequence(process.prunedGenParticles + process.MuonPogTree)
-    else :
+    else :  
         process.muonPogNtuple = cms.Sequence(process.MuonPogTree)
         process.MuonPogTree.PileUpInfoTag = cms.untracked.InputTag("none")
         process.MuonPogTree.GenInfoTag = cms.untracked.InputTag("none")

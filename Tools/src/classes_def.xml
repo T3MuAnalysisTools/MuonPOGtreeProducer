@@ -1,0 +1,13 @@
+<lcgdict>
+  <class name="edm::Ptr<pat::PFParticle>"/>
+  <class name="std::vector<edm::Ptr<pat::PFParticle> >"/>
+  <class name="std::vector<double, std::allocator<double> > " />
+  <class name="std::vector<std::vector<double, std::allocator<double> > > " />
+  <class name="std::vector< std::vector<std::vector<double > > >  " />
+
+  <class name="std::vector< std::vector<int > >   " />
+  <class name="std::vector< std::vector<unsigned int > >   " />
+  <class name="edm::Wrapper<edm::Association<std::vector<reco::Track> > >"/>
+  <class name="edm::Wrapper<pat::TriggerObjectStandAlone>"/>
+  <class name="edm::Association<std::vector<reco::Track> > "/>
+</lcgdict>

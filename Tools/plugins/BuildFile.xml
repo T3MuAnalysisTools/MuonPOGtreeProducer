@@ -9,6 +9,14 @@
 <use name="CommonTools/UtilAlgos"/>
 <use name="PhysicsTools/PatAlgos"/>
 <use name="CommonTools/CandUtils"/>
+<use name="DataFormats/RecoCandidate"/>
+<use name="CommonTools/CandAlgos"/>
+<use name="EgammaAnalysis/ElectronTools"/>
+<use name="PhysicsTools/KinFitter"/>
+<use name="JetMETCorrections/Modules"/>
+<use name="RecoEgamma/EgammaTools" />
+<use name="RecoEgamma/ElectronIdentification" />
+<use name="RecoVertex/AdaptiveVertexFit"/>
 
 <library name="MuonPOGtreeProducerToolsPlugin" file="*.cc">
    <use name="MuonPOGtreeProducer/Tools"/>
